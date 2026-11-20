@@ -1,0 +1,17 @@
+# BASE DE CONOCIMIENTO
+## Registro de errores y soluciones de MongoDB Atlas y Mongoose
+
+**Fecha:** 17/11/2026
+
+| N.º | Error | Síntomas | Causa | Solución |
+|---|---|---|---|---|
+| 1 | `authentication failed` | No se puede establecer conexión con MongoDB Atlas y aparece un error de autenticación. | El nombre de usuario o la contraseña son incorrectos, o existen errores en la URI de conexión. | Verificar las credenciales en MongoDB Atlas, corregir el usuario y la contraseña en la URI. Si existen caracteres especiales en la contraseña, codificarlos correctamente. |
+| 2 | `Could not connect to any servers in your MongoDB Atlas cluster` | La aplicación o MongoDB Compass no logra conectarse a ningún servidor del clúster. | La dirección IP no está autorizada, el clúster no está disponible o existen problemas de red. | Revisar la sección Network Access, agregar la dirección IP pública actual y comprobar que el clúster esté activo. |
+| 3 | `Cannot find module 'mongoose'` | Node.js indica que no puede encontrar el módulo Mongoose al ejecutar el proyecto. | El paquete Mongoose no está instalado o no está disponible en las dependencias del proyecto. | Ejecutar el comando `npm install mongoose` desde la terminal, dentro de la carpeta del proyecto. |
+| 4 | `Invalid scheme, expected connection string to start with "mongodb://" or "mongodb+srv://"` | La aplicación muestra un error al intentar iniciar la conexión con MongoDB. | La URI tiene un formato incorrecto o no comienza con el protocolo requerido. | Corregir la cadena de conexión para que comience con `mongodb://` o `mongodb+srv://`. Se recomienda copiar nuevamente la URI desde MongoDB Atlas, en Connect y después Drivers. |
+| 5 | `IP not whitelisted` | La aplicación no puede conectarse al clúster debido a restricciones de acceso por dirección IP. | La dirección IP desde donde se intenta establecer la conexión no está registrada en la lista de direcciones permitidas. | Ingresar a MongoDB Atlas, abrir Network Access y agregar la dirección IP pública actual del equipo. Guardar los cambios y esperar a que se apliquen. |
+| 6 | `Cannot find module` | Node.js muestra un mensaje indicando que no puede localizar un módulo requerido por el proyecto. | La dependencia no está instalada, tiene un nombre incorrecto en `require` o `import`, o no está disponible en la carpeta del proyecto. | Identificar el módulo faltante y ejecutar `npm install nombre-del-paquete` dentro de la carpeta del proyecto. También verificar que el nombre utilizado en el código sea correcto. |
+
+## Conclusión
+
+La identificación y solución de errores en MongoDB Atlas y Mongoose permite mantener una conexión adecuada entre la aplicación y la base de datos. Esta base de conocimiento reúne los problemas más comunes, sus posibles causas y las soluciones correspondientes, con la finalidad de facilitar su identificación y resolución cuando vuelvan a presentarse durante el desarrollo del proyecto.
