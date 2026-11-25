@@ -1,0 +1,680 @@
+{
+  "info": {
+    "name": "GearStream API",
+    "description": "Pruebas CRUD de las APIs de GearStream. Ejecutar la colección completa en orden.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ],
+  "item": [
+    {
+      "name": "Empresas",
+      "item": [
+        {
+          "name": "Crear empresa",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Empresa Postman\",\n  \"direccion\": \"Av. Pruebas 123\",\n  \"correo\": \"empresa.postman@example.com\",\n  \"telefono\": \"555-0101\",\n  \"estado\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/empresas"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Crea la empresa (201)', () => pm.response.to.have.status(201));",
+                  "const empresa = pm.response.json();",
+                  "pm.expect(empresa._id).to.be.a('string');",
+                  "pm.collectionVariables.set('empresaId', empresa._id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Listar empresas",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/empresas"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Lista empresas (200)', () => pm.response.to.have.status(200));",
+                  "pm.expect(pm.response.json()).to.be.an('array');"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Consultar empresa creada",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/empresas/{{empresaId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Consulta empresa (200)', () => pm.response.to.have.status(200));",
+                  "pm.expect(pm.response.json()._id).to.eql(pm.collectionVariables.get('empresaId'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Actualizar empresa",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Empresa Postman Actualizada\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/empresas/{{empresaId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Actualiza empresa (200)', () => pm.response.to.have.status(200));",
+                  "pm.expect(pm.response.json().nombre).to.eql('Empresa Postman Actualizada');"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Usuarios",
+      "item": [
+        {
+          "name": "Crear usuario",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"empresa_id\": \"{{empresaId}}\",\n  \"nombre\": \"Usuario Postman\",\n  \"correo\": \"usuario.postman@example.com\",\n  \"contraseña\": \"Prueba123!\",\n  \"fecha_registro\": \"2026-01-15T12:00:00.000Z\",\n  \"telefono\": 5550102,\n  \"estado\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/usuarios"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Crea el usuario (201)', () => pm.response.to.have.status(201));",
+                  "const usuario = pm.response.json();",
+                  "pm.expect(usuario._id).to.be.a('string');",
+                  "pm.expect(usuario).not.to.have.property('contraseña');",
+                  "pm.collectionVariables.set('usuarioId', usuario._id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Listar usuarios",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/usuarios"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Lista usuarios (200)', () => pm.response.to.have.status(200));",
+                  "const usuarios = pm.response.json();",
+                  "pm.expect(usuarios).to.be.an('array');",
+                  "usuarios.forEach((usuario) => pm.expect(usuario).not.to.have.property('contraseña'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Consultar usuario creado",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/usuarios/{{usuarioId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Consulta usuario (200)', () => pm.response.to.have.status(200));",
+                  "pm.expect(pm.response.json()._id).to.eql(pm.collectionVariables.get('usuarioId'));",
+                  "pm.expect(pm.response.json()).not.to.have.property('contraseña');"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Actualizar usuario",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Usuario Postman Actualizado\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/usuarios/{{usuarioId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Actualiza usuario (200)', () => pm.response.to.have.status(200));",
+                  "pm.expect(pm.response.json().nombre).to.eql('Usuario Postman Actualizado');",
+                  "pm.expect(pm.response.json()).not.to.have.property('contraseña');"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Videos",
+      "item": [
+        {
+          "name": "Crear video",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"empresa_id\": \"{{empresaId}}\",\n  \"titulo\": \"Video Postman\",\n  \"descripcion\": \"Video creado para probar la API\",\n  \"url_video\": \"https://example.com/video-postman.mp4\",\n  \"categoria\": \"Pruebas\",\n  \"duracion\": 120,\n  \"fecha_publicacion\": \"2026-01-15T12:00:00.000Z\",\n  \"estado\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/videos"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Crea el video (201)', () => pm.response.to.have.status(201));",
+                  "const video = pm.response.json();",
+                  "pm.expect(video._id).to.be.a('string');",
+                  "pm.collectionVariables.set('videoId', video._id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Listar videos",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/videos"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Lista videos (200)', () => pm.response.to.have.status(200));",
+                  "pm.expect(pm.response.json()).to.be.an('array');"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Consultar video creado",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/videos/{{videoId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Consulta video (200)', () => pm.response.to.have.status(200));",
+                  "pm.expect(pm.response.json()._id).to.eql(pm.collectionVariables.get('videoId'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Actualizar video",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Video Postman Actualizado\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/videos/{{videoId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Actualiza video (200)', () => pm.response.to.have.status(200));",
+                  "pm.expect(pm.response.json().titulo).to.eql('Video Postman Actualizado');"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Códigos QR",
+      "item": [
+        {
+          "name": "Crear código QR",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"empresa_id\": \"{{empresaId}}\",\n  \"video_id\": \"{{videoId}}\",\n  \"codigo\": \"GS-POSTMAN-001\",\n  \"url_imagen\": \"https://example.com/qr/GS-POSTMAN-001.png\",\n  \"ubicacion_maquina\": \"Planta de pruebas\",\n  \"maquina\": \"Maquina Postman\",\n  \"fecha_creacion\": \"2026-01-15T12:00:00.000Z\",\n  \"estado\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/codigos-qr"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Crea el código QR (201)', () => pm.response.to.have.status(201));",
+                  "const codigoQR = pm.response.json();",
+                  "pm.expect(codigoQR._id).to.be.a('string');",
+                  "pm.collectionVariables.set('codigoQRId', codigoQR._id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Listar códigos QR",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/codigos-qr"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Lista códigos QR (200)', () => pm.response.to.have.status(200));",
+                  "pm.expect(pm.response.json()).to.be.an('array');"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Consultar código QR creado",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/codigos-qr/{{codigoQRId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Consulta código QR (200)', () => pm.response.to.have.status(200));",
+                  "pm.expect(pm.response.json()._id).to.eql(pm.collectionVariables.get('codigoQRId'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Actualizar código QR",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ubicacion_maquina\": \"Planta actualizada\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/codigos-qr/{{codigoQRId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Actualiza código QR (200)', () => pm.response.to.have.status(200));",
+                  "pm.expect(pm.response.json().ubicacion_maquina).to.eql('Planta actualizada');"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Historial de videos vistos",
+      "item": [
+        {
+          "name": "Crear registro de historial",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuario_id\": \"{{usuarioId}}\",\n  \"video_id\": \"{{videoId}}\",\n  \"fecha_inicio\": \"2026-01-15T12:00:00.000Z\",\n  \"completado\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/historial-videos-vistos"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Crea registro de historial (201)', () => pm.response.to.have.status(201));",
+                  "const historial = pm.response.json();",
+                  "pm.expect(historial._id).to.be.a('string');",
+                  "pm.collectionVariables.set('historialId', historial._id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Listar historial",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/historial-videos-vistos"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Lista historial (200)', () => pm.response.to.have.status(200));",
+                  "pm.expect(pm.response.json()).to.be.an('array');"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Consultar registro de historial",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/historial-videos-vistos/{{historialId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Consulta registro de historial (200)', () => pm.response.to.have.status(200));",
+                  "pm.expect(pm.response.json()._id).to.eql(pm.collectionVariables.get('historialId'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Actualizar registro de historial",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"completado\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/historial-videos-vistos/{{historialId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Actualiza registro de historial (200)', () => pm.response.to.have.status(200));",
+                  "pm.expect(pm.response.json().completado).to.eql(true);"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Limpieza de datos creados",
+      "item": [
+        {
+          "name": "Eliminar código QR",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/codigos-qr/{{codigoQRId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Elimina código QR (204)', () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Eliminar registro de historial",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/historial-videos-vistos/{{historialId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Elimina registro de historial (204)', () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Eliminar usuario",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/usuarios/{{usuarioId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Elimina usuario (204)', () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Eliminar video",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/videos/{{videoId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Elimina video (204)', () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Eliminar empresa",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/empresas/{{empresaId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Elimina empresa (204)', () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
