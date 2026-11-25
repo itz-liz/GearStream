@@ -33,7 +33,7 @@
                 }
               }
             },
-            "url": "{{baseUrl}}/api/empresas"
+            "url": "{{baseUrl}}/empresas"
           },
           "event": [
             {
@@ -54,7 +54,7 @@
           "name": "Listar empresas",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/api/empresas"
+            "url": "{{baseUrl}}/empresas"
           },
           "event": [
             {
@@ -73,7 +73,7 @@
           "name": "Consultar empresa creada",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/api/empresas/{{empresaId}}"
+            "url": "{{baseUrl}}/empresas/{{empresaId}}"
           },
           "event": [
             {
@@ -107,7 +107,7 @@
                 }
               }
             },
-            "url": "{{baseUrl}}/api/empresas/{{empresaId}}"
+            "url": "{{baseUrl}}/empresas/{{empresaId}}"
           },
           "event": [
             {
@@ -146,7 +146,7 @@
                 }
               }
             },
-            "url": "{{baseUrl}}/api/usuarios"
+            "url": "{{baseUrl}}/usuarios"
           },
           "event": [
             {
@@ -168,7 +168,7 @@
           "name": "Listar usuarios",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/api/usuarios"
+            "url": "{{baseUrl}}/usuarios"
           },
           "event": [
             {
@@ -189,7 +189,7 @@
           "name": "Consultar usuario creado",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/api/usuarios/{{usuarioId}}"
+            "url": "{{baseUrl}}/usuarios/{{usuarioId}}"
           },
           "event": [
             {
@@ -224,7 +224,7 @@
                 }
               }
             },
-            "url": "{{baseUrl}}/api/usuarios/{{usuarioId}}"
+            "url": "{{baseUrl}}/usuarios/{{usuarioId}}"
           },
           "event": [
             {
@@ -264,7 +264,7 @@
                 }
               }
             },
-            "url": "{{baseUrl}}/api/videos"
+            "url": "{{baseUrl}}/videos"
           },
           "event": [
             {
@@ -285,7 +285,7 @@
           "name": "Listar videos",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/api/videos"
+            "url": "{{baseUrl}}/videos"
           },
           "event": [
             {
@@ -304,7 +304,7 @@
           "name": "Consultar video creado",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/api/videos/{{videoId}}"
+            "url": "{{baseUrl}}/videos/{{videoId}}"
           },
           "event": [
             {
@@ -338,7 +338,7 @@
                 }
               }
             },
-            "url": "{{baseUrl}}/api/videos/{{videoId}}"
+            "url": "{{baseUrl}}/videos/{{videoId}}"
           },
           "event": [
             {
@@ -377,7 +377,7 @@
                 }
               }
             },
-            "url": "{{baseUrl}}/api/codigos-qr"
+            "url": "{{baseUrl}}/codigos-qr"
           },
           "event": [
             {
@@ -398,7 +398,7 @@
           "name": "Listar códigos QR",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/api/codigos-qr"
+            "url": "{{baseUrl}}/codigos-qr"
           },
           "event": [
             {
@@ -417,7 +417,7 @@
           "name": "Consultar código QR creado",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/api/codigos-qr/{{codigoQRId}}"
+            "url": "{{baseUrl}}/codigos-qr/{{codigoQRId}}"
           },
           "event": [
             {
@@ -451,7 +451,7 @@
                 }
               }
             },
-            "url": "{{baseUrl}}/api/codigos-qr/{{codigoQRId}}"
+            "url": "{{baseUrl}}/codigos-qr/{{codigoQRId}}"
           },
           "event": [
             {
@@ -490,7 +490,7 @@
                 }
               }
             },
-            "url": "{{baseUrl}}/api/historial-videos-vistos"
+            "url": "{{baseUrl}}/historial-videos-vistos"
           },
           "event": [
             {
@@ -511,7 +511,7 @@
           "name": "Listar historial",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/api/historial-videos-vistos"
+            "url": "{{baseUrl}}/historial-videos-vistos"
           },
           "event": [
             {
@@ -530,7 +530,7 @@
           "name": "Consultar registro de historial",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/api/historial-videos-vistos/{{historialId}}"
+            "url": "{{baseUrl}}/historial-videos-vistos/{{historialId}}"
           },
           "event": [
             {
@@ -564,7 +564,7 @@
                 }
               }
             },
-            "url": "{{baseUrl}}/api/historial-videos-vistos/{{historialId}}"
+            "url": "{{baseUrl}}/historial-videos-vistos/{{historialId}}"
           },
           "event": [
             {
@@ -588,7 +588,7 @@
           "name": "Eliminar código QR",
           "request": {
             "method": "DELETE",
-            "url": "{{baseUrl}}/api/codigos-qr/{{codigoQRId}}"
+            "url": "{{baseUrl}}/codigos-qr/{{codigoQRId}}"
           },
           "event": [
             {
@@ -606,7 +606,7 @@
           "name": "Eliminar registro de historial",
           "request": {
             "method": "DELETE",
-            "url": "{{baseUrl}}/api/historial-videos-vistos/{{historialId}}"
+            "url": "{{baseUrl}}/historial-videos-vistos/{{historialId}}"
           },
           "event": [
             {
@@ -624,7 +624,7 @@
           "name": "Eliminar usuario",
           "request": {
             "method": "DELETE",
-            "url": "{{baseUrl}}/api/usuarios/{{usuarioId}}"
+            "url": "{{baseUrl}}/usuarios/{{usuarioId}}"
           },
           "event": [
             {
@@ -642,7 +642,7 @@
           "name": "Eliminar video",
           "request": {
             "method": "DELETE",
-            "url": "{{baseUrl}}/api/videos/{{videoId}}"
+            "url": "{{baseUrl}}/videos/{{videoId}}"
           },
           "event": [
             {
@@ -660,7 +660,7 @@
           "name": "Eliminar empresa",
           "request": {
             "method": "DELETE",
-            "url": "{{baseUrl}}/api/empresas/{{empresaId}}"
+            "url": "{{baseUrl}}/empresas/{{empresaId}}"
           },
           "event": [
             {

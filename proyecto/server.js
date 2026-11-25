@@ -7,11 +7,11 @@ const app = express();
 
 app.use(express.json());
 
-app.use('/api/empresas', require('./routes/empresa_r'));
-app.use('/api/usuarios', require('./routes/usuario_r'));
-app.use('/api/videos', require('./routes/video_r'));
-app.use('/api/codigos-qr', require('./routes/codigo_qr_r'));
-app.use('/api/historial-videos-vistos', require('./routes/historial_video_visto_r'));
+app.use('/empresas', require('./routes/empresa_r'));
+app.use('/usuarios', require('./routes/usuario_r'));
+app.use('/videos', require('./routes/video_r'));
+app.use('/codigos-qr', require('./routes/codigo_qr_r'));
+app.use('/historial-videos-vistos', require('./routes/historial_video_visto_r'));
 
 app.use((req, res) => {
     res.status(404).json({ mensaje: 'La ruta solicitada no existe.' });
